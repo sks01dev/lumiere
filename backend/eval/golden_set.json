@@ -1,0 +1,152 @@
+[
+  {
+    "id": "vibe_01",
+    "category": "Semantic Vibe",
+    "query": "dreams inside dreams corporate espionage heist",
+    "relevant_ids": [27205]
+  },
+  {
+    "id": "vibe_02",
+    "category": "Semantic Vibe",
+    "query": "obsessive jazz drummer pushed to the brink by abusive teacher",
+    "relevant_ids": [244786]
+  },
+  {
+    "id": "vibe_03",
+    "category": "Semantic Vibe",
+    "query": "poor family infiltrates wealthy household by posing as tutors",
+    "relevant_ids": [496243]
+  },
+  {
+    "id": "vibe_04",
+    "category": "Semantic Vibe",
+    "query": "man discovers his entire life is a 24/7 reality television show",
+    "relevant_ids": [37165]
+  },
+  {
+    "id": "vibe_05",
+    "category": "Semantic Vibe",
+    "query": "erasing painful memories of an ex-lover after a breakup",
+    "relevant_ids": [38]
+  },
+  {
+    "id": "vibe_06",
+    "category": "Semantic Vibe",
+    "query": "lonely writer falls in love with an intelligent operating system",
+    "relevant_ids": [152601]
+  },
+  {
+    "id": "vibe_07",
+    "category": "Semantic Vibe",
+    "query": "astronaut travels through a wormhole near Saturn to save humanity",
+    "relevant_ids": [157336]
+  },
+  {
+    "id": "vibe_08",
+    "category": "Semantic Vibe",
+    "query": "mathematician cracking Nazi Enigma code during World War II",
+    "relevant_ids": [205596]
+  },
+  {
+    "id": "filter_01",
+    "category": "Filtered Constraints",
+    "query": "mind-bending sci-fi from around the 1990s under 2 hours",
+    "relevant_ids": [782, 431, 473, 37165]
+  },
+  {
+    "id": "filter_02",
+    "category": "Filtered Constraints",
+    "query": "1990s prison escape drama with hope and friendship",
+    "relevant_ids": [278, 497]
+  },
+  {
+    "id": "filter_03",
+    "category": "Filtered Constraints",
+    "query": "animated adventure under 100 minutes about toys coming to life",
+    "relevant_ids": [862, 863]
+  },
+  {
+    "id": "filter_04",
+    "category": "Filtered Constraints",
+    "query": "critically acclaimed crime thriller from the 1990s",
+    "relevant_ids": [680, 807, 274, 629]
+  },
+  {
+    "id": "filter_05",
+    "category": "Filtered Constraints",
+    "query": "sci-fi action movie from 1999 about simulated reality",
+    "relevant_ids": [603]
+  },
+  {
+    "id": "filter_06",
+    "category": "Filtered Constraints",
+    "query": "1980s time travel teen comedy with a DeLorean",
+    "relevant_ids": [105]
+  },
+  {
+    "id": "neg_01",
+    "category": "Negation & Nuance",
+    "query": "space survival movie that is uplifting and hopeful, not bleak or nihilistic",
+    "relevant_ids": [286217, 157336]
+  },
+  {
+    "id": "neg_02",
+    "category": "Negation & Nuance",
+    "query": "1990s sci-fi under 2 hours, clever and philosophical, not a bloody slasher",
+    "relevant_ids": [782, 37165, 473]
+  },
+  {
+    "id": "neg_03",
+    "category": "Negation & Nuance",
+    "query": "AI and robotics movie about empathy and family, not killer terminator machines",
+    "relevant_ids": [2277, 10681, 152601]
+  },
+  {
+    "id": "neg_04",
+    "category": "Negation & Nuance",
+    "query": "time loop comedy that is funny and heartwarming, not a horror movie",
+    "relevant_ids": [137]
+  },
+  {
+    "id": "neg_05",
+    "category": "Negation & Nuance",
+    "query": "heist movie that is stylish and fun, not grim or depressing",
+    "relevant_ids": [161]
+  },
+  {
+    "id": "entity_01",
+    "category": "Exact Entity & Keyword",
+    "query": "Christopher Nolan Prestige magicians rivalry",
+    "relevant_ids": [1124]
+  },
+  {
+    "id": "entity_02",
+    "category": "Exact Entity & Keyword",
+    "query": "Quentin Tarantino nonlinear crime pulp",
+    "relevant_ids": [680]
+  },
+  {
+    "id": "entity_03",
+    "category": "Exact Entity & Keyword",
+    "query": "Hayao Miyazaki bathhouse spirits",
+    "relevant_ids": [129]
+  },
+  {
+    "id": "entity_04",
+    "category": "Exact Entity & Keyword",
+    "query": "Denis Villeneuve arrival aliens linguistics",
+    "relevant_ids": [329865]
+  },
+  {
+    "id": "entity_05",
+    "category": "Exact Entity & Keyword",
+    "query": "Martin Scorsese Wall Street stockbroker",
+    "relevant_ids": [106646]
+  },
+  {
+    "id": "entity_06",
+    "category": "Exact Entity & Keyword",
+    "query": "David Fincher Fight Club insomnia",
+    "relevant_ids": [550]
+  }
+]

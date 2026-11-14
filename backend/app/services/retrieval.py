@@ -55,17 +55,17 @@ async def search_keyword_only_db(
                   director, cast_names, search_doc,
                   0.0::float AS dense_score,
                   NULL::int AS dense_rank,
-                  ts_rank_cd(fts, websearch_to_tsquery('english', %(q)s))::float AS sparse_score,
-                  ROW_NUMBER() OVER (ORDER BY ts_rank_cd(fts, websearch_to_tsquery('english', %(q)s)) DESC)::int AS sparse_rank,
+                  ts_rank_cd(fts, websearch_to_tsquery('english', %(q)s::text))::float AS sparse_score,
+                  ROW_NUMBER() OVER (ORDER BY ts_rank_cd(fts, websearch_to_tsquery('english', %(q)s::text)) DESC)::int AS sparse_rank,
                   0.0::float AS rrf_score
                 FROM movies
-                WHERE fts @@ websearch_to_tsquery('english', %(q)s)
-                  AND (%(year_min)s IS NULL OR release_year >= %(year_min)s)
-                  AND (%(year_max)s IS NULL OR release_year <= %(year_max)s)
-                  AND (%(max_runtime)s IS NULL OR runtime <= %(max_runtime)s)
-                  AND (%(min_rating)s IS NULL OR rating >= %(min_rating)s)
+                WHERE fts @@ websearch_to_tsquery('english', %(q)s::text)
+                  AND (%(year_min)s::int IS NULL OR release_year >= %(year_min)s::int)
+                  AND (%(year_max)s::int IS NULL OR release_year <= %(year_max)s::int)
+                  AND (%(max_runtime)s::int IS NULL OR runtime <= %(max_runtime)s::int)
+                  AND (%(min_rating)s::float IS NULL OR rating >= %(min_rating)s::float)
                 ORDER BY sparse_score DESC
-                LIMIT %(limit)s;
+                LIMIT %(limit)s::int;
                 """,
                 {
                     "q": query_text,
@@ -77,7 +77,6 @@ async def search_keyword_only_db(
                 },
             )
             return await cur.fetchall()
-
 
 async def get_movie_with_neighbors(movie_id: int) -> tuple[dict | None, list[dict]]:
     """Fetches a single movie and its top 5 vector nearest neighbors for Pipeline X-Ray."""

@@ -1,0 +1,46 @@
+{
+  "corpus_size": 1000,
+  "num_queries": 14,
+  "ablation_table": [
+    {
+      "stage": "Sparse Lexical (tsvector)",
+      "hit_at_3": 21.4,
+      "mrr_at_10": 0.214,
+      "ndcg_at_10": 0.214,
+      "p95_latency_ms": 1100
+    },
+    {
+      "stage": "Dense Vector (pgvector HNSW)",
+      "hit_at_3": 100.0,
+      "mrr_at_10": 0.917,
+      "ndcg_at_10": 0.898,
+      "p95_latency_ms": 2446
+    },
+    {
+      "stage": "Hybrid RRF (k=60)",
+      "hit_at_3": 100.0,
+      "mrr_at_10": 0.917,
+      "ndcg_at_10": 0.898,
+      "p95_latency_ms": 2361
+    },
+    {
+      "stage": "Hybrid RRF + Voyage Rerank",
+      "hit_at_3": 92.9,
+      "mrr_at_10": 0.833,
+      "ndcg_at_10": 0.855,
+      "p95_latency_ms": 2912
+    }
+  ],
+  "case_studies": [
+    {
+      "query": "mind-bending sci-fi from around the 1990s, under 2 hours, not sad",
+      "sparse_issue": "0 lexical hits because natural-language phrasing ('mind-bending', 'not sad') never appears verbatim in plot synopses.",
+      "hybrid_rerank_win": "Groq extracted year_min=1988, year_max=2001, max_runtime=120; HNSW iterative_scan preserved recall; Voyage reranker promoted Cube, Gattaca, Galaxy Quest, and Pi while demoting bleak tragedies."
+    },
+    {
+      "query": "space survival movie that is uplifting and hopeful, not bleak or nihilistic",
+      "sparse_issue": "Keyword search matches 'bleak' and 'nihilistic' literally, surfacing tragic space disasters.",
+      "hybrid_rerank_win": "Cross-encoder attention resolves the negation ('not bleak') and ranks The Martian (#1) above darker sci-fi survival dramas."
+    }
+  ]
+}
