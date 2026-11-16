@@ -1,26 +1,47 @@
-# Lumière — Constraint-Aware Hybrid Movie Search & Discovery Engine
+<div align="center">
 
-**Lumière** is an end-to-end, multi-stage information retrieval and cinema discovery platform built to understand how people naturally describe films—combining **story themes, emotional tone, compound temporal/runtime constraints, and explicit exclusions** (e.g., _"mind-bending sci-fi from around the 1990s, under 2 hours 15 minutes, not sad"_).
+# 🎬 Lumière
+### Constraint-Aware Hybrid Information Retrieval & Cinema Discovery Engine
 
-Unlike keyword-only catalogs or rigid genre dropdowns, Lumière separates deterministic metadata constraints from semantic intent, retrieves candidates in a single PostgreSQL round-trip via **Reciprocal Rank Fusion (RRF)** over `pgvector` HNSW and weighted `tsvector` indexes, re-scores top results with a **cross-encoder**, and personalizes discovery using a **taste-centroid vector** computed from each user's saved Bucket List.
+![Next.js](https://img.shields.io/badge/Next.js_16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Python](https://img.shields.io/badge/Python_3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL_+_pgvector-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase_Auth_&_RLS-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
+
+**Semantic search that understands plot nuance, emotional tone, and hard constraints simultaneously.**
+
+</div>
+
+---
+
+## Overview
+
+Most movie catalogs force users into rigid genre dropdowns or brittle keyword matching. **Lumière** bridges natural-language intent and deterministic database filtering—allowing users to search the way they actually describe movies:
+
+> *"mind-bending sci-fi from around the 1990s, under 2 hours 15 minutes, not sad"*
+
+Behind a single search bar, Lumière decomposes compound temporal and runtime constraints, executes a single-hop **Reciprocal Rank Fusion (RRF)** query across dense `pgvector` HNSW embeddings and field-weighted `tsvector` indexes, re-scores candidates with a **cross-encoder**, and generates **taste-centroid recommendations** from each user's cloud-synced Bucket List.
 
 ---
 
 ## System Architecture
 
 ```text
-User Query ("sci-fi before 2000, under 2 hours 15 minutes, not sad")
+User Query ("mind-bending sci-fi before 2000, under 2 hours 15 minutes, not sad")
    │
    ▼
-[1] Hybrid Intent & Constraint Router (Deterministic Regex + Groq Llama-3.1-8B)
-   ├── Hard Metadata Filters: year_max=1999, max_runtime=135
-   └── Clean Semantic Query:  "mind-bending sci-fi, not sad"
+[1] Hybrid Constraint & Intent Router (Deterministic Regex + Groq Llama-3.1-8B)
+   ├── Hard SQL Predicates:  year_max = 1999, max_runtime = 135
+   └── Clean Semantic Query: "mind-bending sci-fi, not sad"
    │
    ▼
 [2] Single-Hop PostgreSQL Hybrid Retrieval (pgvector HNSW + tsvector GIN)
    ├── Dense Branch:  768-d L2-normalized Gemini embeddings (iterative_scan)
    ├── Sparse Branch: Field-weighted full-text search (title, director, cast, plot)
-   └── Fusion:        Reciprocal Rank Fusion (RRF, k=60)
+   └── Fusion:        Reciprocal Rank Fusion (RRF, k = 60)
    │
    ▼
 [3] Cross-Encoder Reranking (Voyage AI rerank-2.5-lite)
@@ -33,42 +54,43 @@ User Query ("sci-fi before 2000, under 2 hours 15 minutes, not sad")
 
 ---
 
+## Multi-Layer Caching & Latency Architecture
+
+To eliminate redundant LLM/embedding API calls, protect free-tier quotas, and keep UI navigation instantaneous, Lumière implements a **4-tier caching pipeline**:
+
+| Layer | Module | Cache Key | Engineering Impact |
+| :--- | :--- | :--- | :--- |
+| **Client Detail & Centroid Cache** | `frontend/src/lib/api.ts` | `movie_id` & sorted `savedIds` | `0ms` instant navigation across Bucket List items and film detail pages with zero duplicate fetches |
+| **Trailing Recommendation Debounce** | `frontend/src/app/page.tsx` | `350ms` window on `savedIds` | Coalesces rapid bookmark toggles into a single centroid recommendation request |
+| **Router & Embedding Cache** | `query_router.py` & `embeddings.py` | Normalized query string | Bypasses Groq constraint extraction and Gemini embedding calls entirely on repeat queries |
+| **Full Search Response Cache** | `backend/app/main.py` | `(normalized_query, mode)` | Serves repeat searches directly from FastAPI memory in `<1ms` without hitting PostgreSQL or Voyage AI |
+
+---
+
 ## Offline Retrieval Benchmarks
 
-Evaluated across a curated benchmark suite spanning entity lookups, thematic mood queries, compound decade/runtime filters, and negation constraints:
+Evaluated across a curated benchmark suite covering entity lookups, thematic mood queries, compound decade/runtime filters, and negation constraints:
 
-| Retrieval Stage                       |   Hit@3    |  MRR@10   |  nDCG@10  | Architectural Role                                                             |
-| :------------------------------------ | :--------: | :-------: | :-------: | :----------------------------------------------------------------------------- |
-| Sparse Lexical (`tsvector`)           |   21.4%    |   0.250   |   0.264   | Exact title, director, and cast matching; fails on abstract mood queries       |
-| Dense Vector (`pgvector` HNSW)        |   85.7%    |   0.818   |   0.847   | High thematic recall; weaker on proper nouns and explicit negations            |
-| **Hybrid RRF ($k=60$)**               | **100.0%** | **0.881** | **0.912** | **Single-query SQL fusion achieving 100% top-3 candidate recall**              |
-| **Hybrid RRF + Cross-Encoder Rerank** | **92.9%**  | **0.869** | **0.896** | **Fine-grained semantic discrimination and negation resolution ("not bleak")** |
+| Retrieval Pipeline | Hit@3 | MRR@10 | nDCG@10 | Role in System |
+| :--- | :---: | :---: | :---: | :--- |
+| Sparse Lexical (`tsvector`) | 21.4% | 0.250 | 0.264 | Exact title, director, and cast lookup; fails on abstract mood queries |
+| Dense Vector (`pgvector` HNSW) | 85.7% | 0.818 | 0.847 | High thematic recall; weaker on proper nouns and explicit negations |
+| **Hybrid RRF ($k=60$)** | **100.0%** | **0.881** | **0.912** | **Single-query SQL fusion achieving 100% top-3 candidate recall** |
+| **Hybrid RRF + Cross-Encoder Rerank** | **92.9%** | **0.869** | **0.896** | **Fine-grained semantic discrimination and negation resolution (*"not bleak"*)** |
 
 ---
 
 ## Key Engineering Highlights
 
-- **Zero-Rate-Limit Deterministic + LLM Query Routing:** Compound duration phrases (`"under 2 hours 15 minutes"` $\rightarrow$ `135` min) and relative temporal expressions (`"before 2000"` $\rightarrow$ `year_max=1999`, `"around the 1990s"` $\rightarrow$ `1988–2001`) are parsed deterministically in `<0.1ms` and merged with Groq structured JSON extraction, eliminating single-point LLM rate-limit failures.
-- **Post-Filtering Recall Preservation (`iterative_scan`):** Uses `pgvector` HNSW `iterative_scan` alongside hard SQL predicate guards so strict year and runtime filters never suffer from top-$k$ graph starvation.
-- **Single-Hop Database Execution:** Executes dense cosine similarity, field-weighted `ts_rank_cd`, and Reciprocal Rank Fusion inside a single parameterized PostgreSQL query to minimize network round-trips.
-- **Resumable, Quota-Aware Ingestion Pipeline:** Idempotent ETL pipeline (`backend/scripts/ingest.py`) combining MovieLens `links.csv` with TMDB metadata enrichment and L2-normalized 768-d Matryoshka Gemini embeddings, pacing batches safely within free-tier quotas.
-- **Guest Mode + Cloud OAuth Bucket List Sync:** Supports instant guest browsing (`localStorage`) and seamless Google OAuth sign-in (`Supabase Auth` + PostgreSQL Row Level Security), automatically migrating local selections to the cloud and computing a real-time taste centroid (`AVG(embedding)::vector(768)`) once 2+ films are saved.
+* **Zero-Rate-Limit Compound Constraint Parsing:** Compound durations (`"under 2 hours 15 minutes"` $\rightarrow$ `135` min) and relative year expressions (`"before 2000"` $\rightarrow$ `year_max=1999`, `"around the 1990s"` $\rightarrow$ `1988–2001`) are parsed deterministically in `<0.1ms` and merged with Groq structured JSON extraction, ensuring full resilience against external LLM rate limits.
+* **Post-Filtering Recall Preservation (`iterative_scan`):** Enables `pgvector` HNSW `iterative_scan` alongside hard SQL predicate guards so strict year and runtime filters never suffer from top-$k$ graph starvation.
+* **Single-Hop Database Execution:** Executes dense cosine similarity, field-weighted `ts_rank_cd`, and Reciprocal Rank Fusion inside one parameterized PostgreSQL query to minimize network round-trips.
+* **Resumable, Quota-Safe ETL Pipeline:** Idempotent ingestion (`backend/scripts/ingest.py`) combining MovieLens `links.csv` with TMDB enrichment and L2-normalized 768-d Matryoshka Gemini embeddings, pacing batches safely within daily free-tier limits.
+* **Frictionless Guest Mode + Cloud OAuth Sync:** Supports immediate guest exploration (`localStorage`) and Google OAuth sign-in (`Supabase Auth` + PostgreSQL Row Level Security), automatically migrating local Bucket List selections to the cloud and computing a real-time taste centroid (`AVG(embedding)::vector(768)`).
 
 ---
 
-## Tech Stack
-
-| Layer                       | Technologies                                                                                                |
-| :-------------------------- | :---------------------------------------------------------------------------------------------------------- |
-| **Frontend**                | Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS, Lucide Icons, `@supabase/supabase-js`          |
-| **Backend API**             | FastAPI, Python 3.12, `psycopg3` Async Connection Pool, Pydantic v2                                         |
-| **Database & Vector Store** | PostgreSQL + `pgvector` (HNSW Index) + `tsvector` (GIN Index) on Supabase                                   |
-| **AI & Retrieval Models**   | Google Gemini Embeddings (`768-d` Matryoshka), Groq (`llama-3.1-8b-instant`), Voyage AI (`rerank-2.5-lite`) |
-| **Infrastructure**          | Docker on Render (Backend API), Vercel (Frontend), Supabase Auth & RLS                                      |
-
----
-
-## Project Structure
+## Repository Structure
 
 ```text
 lumiere/
@@ -113,16 +135,9 @@ lumiere/
 
 ---
 
-## Local Development Setup
+## Local Setup
 
-### Prerequisites
-
-- Python 3.12+ (`uv` recommended) and Node.js 20+
-- Supabase PostgreSQL instance with `pgvector` enabled
-- API keys for TMDB, Google AI Studio (Gemini), Groq, and Voyage AI
-
-### 1. Backend
-
+### 1. Backend (FastAPI)
 ```bash
 cd backend
 cp .env.example .env
@@ -130,14 +145,12 @@ uv sync
 uv run uvicorn app.main:app --reload --port 8000
 ```
 
-### 2. Data Ingestion
-
+### 2. Data Ingestion (Resumable)
 ```bash
 uv run python backend/scripts/ingest.py
 ```
 
-### 3. Frontend
-
+### 3. Frontend (Next.js)
 ```bash
 cd frontend
 cp .env.example .env.local
@@ -145,24 +158,31 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000` in your browser. Interactive OpenAPI documentation is available at `http://localhost:8000/docs`.
+* Web App: `http://localhost:3000`
+* Interactive API Docs: `http://localhost:8000/docs`
 
 ---
 
-## API Reference
+## API Endpoints
 
-| Method | Endpoint                 | Description                                                                                    |
-| :----- | :----------------------- | :--------------------------------------------------------------------------------------------- |
-| `GET`  | `/health`                | Service health check                                                                           |
-| `POST` | `/api/search`            | Executes hybrid RRF + cross-encoder search or lexical baseline with extracted filters          |
-| `GET`  | `/api/movies/{movie_id}` | Returns film metadata and top-5 nearest semantic neighbors in HNSW space                       |
-| `POST` | `/api/recommendations`   | Computes the L2-averaged embedding centroid of saved Bucket List IDs to recommend unseen films |
-| `GET`  | `/api/benchmarks`        | Serves offline retrieval ablation metrics and failure-mode case studies                        |
+| Method | Route | Description |
+| :--- | :--- | :--- |
+| `GET` | `/health` | Service health check |
+| `POST` | `/api/search` | Hybrid RRF + cross-encoder search or lexical baseline with extracted metadata filters |
+| `GET` | `/api/movies/{movie_id}` | Film metadata and top-5 nearest semantic neighbors in HNSW embedding space |
+| `POST` | `/api/recommendations` | L2-averaged embedding centroid across saved Bucket List IDs to recommend unseen films |
+| `GET` | `/api/benchmarks` | Offline retrieval ablation metrics and qualitative case studies |
 
 ---
 
 ## Production Deployment
 
-1. **Backend (Render):** Deploy `backend/` as a Docker Web Service (`PORT=8000`) with `SUPABASE_DB_URL`, `GEMINI_API_KEY`, `GROQ_API_KEY`, and `VOYAGE_API_KEY` configured.
-2. **Frontend (Vercel):** Deploy `frontend/` with `NEXT_PUBLIC_API_URL` pointing to the Render service URL along with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+1. **Backend (Render):** Deploy `backend/` as a Web Service (`pip install -r requirements.txt` / `uvicorn app.main:app --host 0.0.0.0 --port $PORT`) with `SUPABASE_DB_URL`, `GEMINI_API_KEY`, `GROQ_API_KEY`, and `VOYAGE_API_KEY` configured.
+2. **Frontend (Vercel):** Deploy `frontend/` with `NEXT_PUBLIC_API_URL` pointing to the live Render service URL along with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 3. **OAuth Redirects (Supabase):** Add the live Vercel domain to **Authentication → URL Configuration → Site URL** and **Redirect URLs**.
+
+---
+
+## Data Attribution
+
+Film metadata and artwork provided by [TMDB](https://www.themoviedb.org/) and the [GroupLens MovieLens](https://grouplens.org/datasets/movielens/) dataset.
