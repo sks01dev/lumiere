@@ -26,34 +26,14 @@ Most movie catalogs force users into rigid genre dropdowns or brittle keyword ma
 <img width="1366" height="654" alt="image" src="https://github.com/user-attachments/assets/0f33b2c3-eaae-4ee7-bfbd-c65ce0d8594f" />
 
 
+
 Behind a single search bar, Lumière decomposes compound temporal and runtime constraints, executes a single-hop **Reciprocal Rank Fusion (RRF)** query across dense `pgvector` HNSW embeddings and field-weighted `tsvector` indexes, re-scores candidates with a **cross-encoder**, and generates **taste-centroid recommendations** from each user's cloud-synced Bucket List.
 
 ---
 
 ## System Architecture
 
-```text
-User Query ("mind-bending sci-fi before 2000, under 2 hours 15 minutes, not sad")
-   │
-   ▼
-[1] Hybrid Constraint & Intent Router (Deterministic Regex + Groq Llama-3.1-8B)
-   ├── Hard SQL Predicates:  year_max = 1999, max_runtime = 135
-   └── Clean Semantic Query: "mind-bending sci-fi, not sad"
-   │
-   ▼
-[2] Single-Hop PostgreSQL Hybrid Retrieval (pgvector HNSW + tsvector GIN)
-   ├── Dense Branch:  768-d L2-normalized Gemini embeddings (iterative_scan)
-   ├── Sparse Branch: Field-weighted full-text search (title, director, cast, plot)
-   └── Fusion:        Reciprocal Rank Fusion (RRF, k = 60)
-   │
-   ▼
-[3] Cross-Encoder Reranking (Voyage AI rerank-2.5-lite)
-   └── Jointly attends over query + candidate metadata to resolve negations ("not sad")
-   │
-   ▼
-[4] Cloud Bucket List & Vector Centroid Personalization (Supabase Auth + RLS)
-   └── Computes AVG(embedding)::vector(768) across saved films to surface unseen matches
-```
+<img width="1024" height="572" alt="image" src="https://github.com/user-attachments/assets/27a42dd0-0522-4a1f-bb3a-bc433443606b" />
 
 ---
 
