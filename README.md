@@ -33,7 +33,7 @@ Behind a single search bar, Lumière decomposes compound temporal and runtime co
 
 ## System Architecture
 
-<img width="1024" height="572" alt="image" src="https://github.com/user-attachments/assets/27a42dd0-0522-4a1f-bb3a-bc433443606b" />
+<img width="1024" height="572" alt="sysarch(1)" src="https://github.com/user-attachments/assets/1dbc8497-773c-460e-b10a-694c46e96b08" />
 
 ---
 
