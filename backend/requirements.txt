@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pydantic-settings
+psycopg[binary,pool]
+google-genai
+groq
+voyageai
+numpy
+python-dotenv

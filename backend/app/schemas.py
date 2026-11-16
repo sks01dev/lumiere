@@ -10,9 +10,9 @@ class ExtractedFilters(BaseModel):
 
 
 class SearchRequest(BaseModel):
-    query: str = Field(..., min_length=1, max_length=300)
+    query: str = Field(..., min_length=1, max_length=500)
     mode: Literal["hybrid_rerank", "keyword_only"] = "hybrid_rerank"
-    override_filters: ExtractedFilters | None = None
+    limit: int = Field(default=12, ge=1, le=24)
 
 
 class SignalBreakdown(BaseModel):
@@ -28,16 +28,16 @@ class SignalBreakdown(BaseModel):
 
 class MovieResult(BaseModel):
     id: int
-    title: str
-    release_year: int | None
-    runtime: int | None
-    rating: float | None
-    poster_url: str | None
-    backdrop_url: str | None
-    overview: str
-    genres: list[str]
-    director: str
-    cast_names: list[str]
+    title: str = ""
+    release_year: int | None = None
+    runtime: int | None = None
+    rating: float | None = None
+    poster_url: str | None = None
+    backdrop_url: str | None = None
+    overview: str = ""
+    genres: list[str] = []
+    director: str = ""
+    cast_names: list[str] = []
     match_percent: int
     signals: SignalBreakdown
 
@@ -83,3 +83,12 @@ class ExplainResponse(BaseModel):
 class MovieDetailResponse(BaseModel):
     movie: MovieResult
     neighbors: list[MovieResult]
+
+
+class RecommendRequest(BaseModel):
+    movie_ids: list[int] = Field(..., min_length=1, max_length=50)
+    limit: int = Field(default=6, ge=1, le=12)
+
+
+class RecommendResponse(BaseModel):
+    recommendations: list[MovieResult]

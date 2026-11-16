@@ -22,7 +22,7 @@ GEMINI_KEY = os.environ["GEMINI_API_KEY"]
 gemini = genai.Client(api_key=GEMINI_KEY)
 
 MOVIELENS_URL = "https://files.grouplens.org/datasets/movielens/ml-latest-small.zip"
-TARGET_MOVIES = 1000          # Ingests top 1,000 movies in ~10.5 mins today (change to 2500/4119 anytime to resume)
+TARGET_MOVIES = 2000
 EMBED_BATCH_SIZE = 45         # Strictly below Gemini's 100 items/min free-tier limit
 BATCH_SLEEP_SECONDS = 32.0    # ~84 items/min steady throughput
 TMDB_CONCURRENCY = 25

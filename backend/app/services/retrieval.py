@@ -2,6 +2,24 @@ from app.db import get_pool
 from app.schemas import ExtractedFilters
 
 
+
+def _apply_hard_filters(rows: list[dict], filters) -> list[dict]:
+    out = []
+    for r in rows:
+        yr = r.get("release_year")
+        rt = r.get("runtime")
+        rat = r.get("rating")
+        if filters.year_min is not None and (yr is None or yr < filters.year_min):
+            continue
+        if filters.year_max is not None and (yr is None or yr > filters.year_max):
+            continue
+        if filters.max_runtime is not None and (rt is None or rt > filters.max_runtime):
+            continue
+        if filters.min_rating is not None and (rat is None or float(rat) < filters.min_rating):
+            continue
+        out.append(r)
+    return out
+
 async def search_hybrid_db(
     query_text: str,
     query_embedding: list[float],
@@ -35,7 +53,8 @@ async def search_hybrid_db(
                     "match_count": match_count,
                 },
             )
-            return await cur.fetchall()
+            rows = await cur.fetchall()
+            return _apply_hard_filters(rows, filters)
 
 
 async def search_keyword_only_db(
@@ -76,38 +95,81 @@ async def search_keyword_only_db(
                     "limit": limit,
                 },
             )
-            return await cur.fetchall()
+            rows = await cur.fetchall()
+            return _apply_hard_filters(rows, filters)
 
-async def get_movie_with_neighbors(movie_id: int) -> tuple[dict | None, list[dict]]:
-    """Fetches a single movie and its top 5 vector nearest neighbors for Pipeline X-Ray."""
+
+async def get_movie_with_neighbors(movie_id: int, limit: int = 5) -> tuple[dict | None, list[dict]]:
+    """Fetches a single movie and its nearest semantic neighbors in pgvector HNSW space."""
     pool = get_pool()
     async with pool.connection() as conn:
         async with conn.cursor() as cur:
             await cur.execute(
                 """
-                SELECT id, title, release_year, runtime, rating,
-                       poster_path, backdrop_path, overview, genres, director, cast_names
-                FROM movies WHERE id = %(id)s;
+                SELECT
+                  id, title, release_year, runtime, rating,
+                  poster_path, backdrop_path, overview, genres,
+                  director, cast_names, embedding::text AS emb_text
+                FROM movies
+                WHERE id = %(mid)s::int;
                 """,
-                {"id": movie_id},
+                {"mid": movie_id},
             )
             movie = await cur.fetchone()
             if not movie:
                 return None, []
 
+            emb_text = movie.pop("emb_text", None)
+            if not emb_text:
+                return movie, []
+
             await cur.execute(
                 """
+                SELECT
+                  id, title, release_year, runtime, rating,
+                  poster_path, backdrop_path, overview, genres,
+                  director, cast_names,
+                  (1.0 - (embedding <=> %(emb)s::vector(768)))::float AS dense_score
+                FROM movies
+                WHERE id <> %(mid)s::int
+                  AND embedding IS NOT NULL
+                ORDER BY embedding <=> %(emb)s::vector(768)
+                LIMIT %(limit)s::int;
+                """,
+                {"mid": movie_id, "emb": emb_text, "limit": limit},
+            )
+            neighbors = await cur.fetchall()
+            return movie, neighbors
+
+
+async def get_watchlist_recommendations(movie_ids: list[int], limit: int = 6) -> list[dict]:
+    """Computes the centroid embedding of saved watchlist movies in PostgreSQL and finds unseen neighbors."""
+    if not movie_ids:
+        return []
+    pool = get_pool()
+    async with pool.connection() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(
+                """
+                WITH centroid AS (
+                  SELECT AVG(embedding) AS avg_emb
+                  FROM movies
+                  WHERE id = ANY(%(ids)s::int[])
+                    AND embedding IS NOT NULL
+                )
                 SELECT
                   m.id, m.title, m.release_year, m.runtime, m.rating,
                   m.poster_path, m.backdrop_path, m.overview, m.genres,
                   m.director, m.cast_names,
-                  (1.0 - (m.embedding <=> target.embedding))::float AS similarity
-                FROM movies m, (SELECT embedding FROM movies WHERE id = %(id)s) target
-                WHERE m.id != %(id)s
-                ORDER BY m.embedding <=> target.embedding
-                LIMIT 5;
+                  (1.0 - (m.embedding <=> c.avg_emb))::float AS dense_score
+                FROM movies m
+                CROSS JOIN centroid c
+                WHERE c.avg_emb IS NOT NULL
+                  AND m.embedding IS NOT NULL
+                  AND NOT (m.id = ANY(%(ids)s::int[]))
+                ORDER BY m.embedding <=> c.avg_emb
+                LIMIT %(limit)s::int;
                 """,
-                {"id": movie_id},
+                {"ids": movie_ids, "limit": limit},
             )
-            neighbors = await cur.fetchall()
-            return movie, neighbors
+            return await cur.fetchall()
