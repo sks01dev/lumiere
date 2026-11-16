@@ -21,7 +21,10 @@
 
 Most movie catalogs force users into rigid genre dropdowns or brittle keyword matching. **Lumière** bridges natural-language intent and deterministic database filtering—allowing users to search the way they actually describe movies:
 
-> *"mind-bending sci-fi from around the 1990s, under 2 hours 15 minutes, not sad"*
+> *"football film before 2005, under 2 hrs"*
+
+<img width="1366" height="654" alt="image" src="https://github.com/user-attachments/assets/0f33b2c3-eaae-4ee7-bfbd-c65ce0d8594f" />
+
 
 Behind a single search bar, Lumière decomposes compound temporal and runtime constraints, executes a single-hop **Reciprocal Rank Fusion (RRF)** query across dense `pgvector` HNSW embeddings and field-weighted `tsvector` indexes, re-scores candidates with a **cross-encoder**, and generates **taste-centroid recommendations** from each user's cloud-synced Bucket List.
 
