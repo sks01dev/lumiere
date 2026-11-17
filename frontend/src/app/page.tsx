@@ -109,7 +109,7 @@ export default function DiscoverPage() {
 
   if (!hasEntered) {
     return (
-      <div className="mx-auto max-w-4xl py-8 sm:py-16">
+      <div className="mx-auto w-full max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
         <div className="rounded-3xl border border-[#1E2230] bg-[#0F1117] p-8 text-center sm:p-14">
           <span className="inline-flex items-center gap-2 rounded-full border border-[#EAB308]/30 bg-[#EAB308]/10 px-4 py-1 text-xs font-semibold tracking-wide text-[#EAB308]">
             <Film className="h-3.5 w-3.5" />
