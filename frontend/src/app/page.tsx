@@ -152,7 +152,7 @@ export default function DiscoverPage() {
             </button>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-4 border-t border-[#1E2230] pt-8 text-left sm:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-4 border-t border-[#1E2230] pt-8 text-left sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             <div className="rounded-2xl border border-[#1E2230] bg-[#07080B] p-5">
               <Compass className="h-5 w-5 text-[#EAB308]" />
               <h2 className="mt-3 text-sm font-semibold text-white">
@@ -330,7 +330,7 @@ export default function DiscoverPage() {
 
       {/* Instant Shimmer Skeleton Loader during search */}
       {loading && !data && (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
@@ -368,7 +368,7 @@ export default function DiscoverPage() {
 
       {data && (
         <div
-          className={`grid grid-cols-1 gap-6 transition-opacity duration-200 sm:grid-cols-2 lg:grid-cols-3 ${
+          className={`grid grid-cols-1 gap-6 transition-opacity duration-200 sm:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ${
             loading ? "opacity-60" : "opacity-100"
           }`}
         >
@@ -489,7 +489,7 @@ export default function DiscoverPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-6">
             {forYou.map((rec) => (
               <Link
                 key={rec.id}
