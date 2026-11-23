@@ -84,7 +84,7 @@ export default function Footer() {
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-[#1E2230] pt-6 text-xs text-zinc-500 sm:flex-row">
           <p>&copy; {new Date().getFullYear()} Lumière Cinema Search.</p>
-          <p>Designed &amp; Engineered by Shivam Kumar Swarnkar</p>
+          
         </div>
       </div>
     </footer>
