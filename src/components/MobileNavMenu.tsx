@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import LumiereMobileMenu from "@/components/LumiereMobileMenu";
 
 interface MobileNavMenuProps {
   bucketCount?: number;
