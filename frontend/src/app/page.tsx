@@ -390,7 +390,7 @@ export default function DiscoverPage() {
                       ? "Remove from Bucket List"
                       : "Add to Bucket List"
                   }
-                  className={`absolute top-3 right-16 z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 transition-colors active:scale-90 ${
+                  className={`absolute top-3 right-[4.75rem] z-10 flex h-8 w-8 items-center justify-center rounded-full border border-white/10 transition-colors active:scale-90 ${
                     bookmarked
                       ? "bg-[#EAB308] text-black"
                       : "bg-[#07080B]/90 text-zinc-200 hover:bg-white hover:text-black"

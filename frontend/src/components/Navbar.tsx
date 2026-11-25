@@ -21,10 +21,6 @@ export default function Navbar() {
   const menuContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     if (!menuOpen) return;
     const handleOutsideClick = (event: MouseEvent) => {
       if (
