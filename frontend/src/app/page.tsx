@@ -420,7 +420,7 @@ export default function DiscoverPage() {
                       {movie.match_percent}% Match
                     </span>
 
-                    <span className="absolute top-3 right-3 flex items-center gap-1 rounded-full border border-white/10 bg-[#07080B]/90 px-2.5 py-1 text-xs font-medium text-zinc-200 w-full min-w-0">
+                    <span className="absolute top-3 right-3 flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full border border-white/10 bg-[#07080B]/90 px-2.5 py-1 text-xs font-medium text-zinc-200">
                       <Star className="h-3.5 w-3.5 fill-[#EAB308] text-[#EAB308]" />
                       {movie.rating ?? "N/A"}
                     </span>
