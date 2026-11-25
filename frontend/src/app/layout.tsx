@@ -36,7 +36,7 @@ export default function RootLayout({
       className={`dark ${inter.variable} ${playfair.variable}`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-screen flex-col bg-[#07080B] font-sans text-zinc-100 antialiased selection:bg-[#EAB308]/30 selection:text-[#FDE047]">
+      <body className="flex min-h-screen flex-col bg-[#07080B] font-sans text-zinc-100 antialiased selection:bg-[#EAB308]/30 selection:text-[#FDE047] w-full max-w-full overflow-x-clip bg-zinc-950 text-zinc-50 antialiased">
         <WatchlistProvider>
           <Navbar />
           <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">

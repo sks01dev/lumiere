@@ -51,9 +51,9 @@ export default function WatchlistPage() {
 
   return (
     <div className="space-y-12">
-      <section className="flex flex-col justify-between gap-4 rounded-3xl border border-[#1E2230] bg-[#0F1117] p-6 shadow-xl sm:flex-row sm:items-center sm:p-8">
+      <section className="flex flex-col justify-between gap-4 rounded-3xl border border-[#1E2230] bg-[#0F1117] p-6 shadow-xl sm:flex-row sm:items-center sm:p-8 w-full min-w-0">
         <div>
-          <div className="flex items-center gap-2 text-[#EAB308]">
+          <div className="flex items-center gap-2 text-[#EAB308] w-full min-w-0">
             <Bookmark className="h-5 w-5" />
             <span className="text-xs font-semibold uppercase tracking-wider">
               {user ? "Cloud Synced Bucket List" : "Guest Bucket List"}
@@ -76,7 +76,7 @@ export default function WatchlistPage() {
           <button
             type="button"
             onClick={signInWithGoogle}
-            className="inline-flex items-center gap-2 self-start rounded-full bg-[#EAB308] px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[#FACC15] active:scale-95"
+            className="inline-flex items-center gap-2 self-start rounded-full bg-[#EAB308] px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-[#FACC15] active:scale-95 w-full min-w-0"
           >
             <LogIn className="h-4 w-4" />
             Sync with Google
@@ -104,11 +104,11 @@ export default function WatchlistPage() {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 w-full min-w-0">
           {movies.map((m) => (
             <div
               key={m.id}
-              className="flex flex-col overflow-hidden rounded-2xl border border-[#1E2230] bg-[#0F1117] transition-all duration-300 hover:-translate-y-1 hover:border-zinc-700"
+              className="flex flex-col overflow-hidden rounded-2xl border border-[#1E2230] bg-[#0F1117] transition-all duration-300 hover:-translate-y-1 hover:border-zinc-700 w-full min-w-0"
             >
               <Link href={`/movie/${m.id}`}>
                 {m.poster_url && (
@@ -119,7 +119,7 @@ export default function WatchlistPage() {
                   />
                 )}
               </Link>
-              <div className="flex flex-1 flex-col justify-between p-4">
+              <div className="flex flex-1 flex-col justify-between p-4 w-full min-w-0">
                 <div>
                   <Link
                     href={`/movie/${m.id}`}
@@ -134,7 +134,7 @@ export default function WatchlistPage() {
                 <button
                   type="button"
                   onClick={() => void toggleMovie(m.id)}
-                  className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-full border border-[#1E2230] bg-[#07080B] py-2 text-xs font-medium text-zinc-300 transition hover:border-red-500/40 hover:text-red-400 active:scale-95"
+                  className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-full border border-[#1E2230] bg-[#07080B] py-2 text-xs font-medium text-zinc-300 transition hover:border-red-500/40 hover:text-red-400 active:scale-95 w-full min-w-0"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                   Remove
@@ -160,7 +160,7 @@ export default function WatchlistPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6 w-full min-w-0">
             {recs.map((rec) => (
               <Link
                 key={rec.id}

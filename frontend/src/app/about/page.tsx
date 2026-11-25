@@ -22,12 +22,12 @@ export default function AboutPage() {
           <span className="italic text-[#FDE047]">&ldquo;not sad&rdquo;</span>.
         </p>
 
-        <div className="mt-6 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-wrap gap-3 w-full min-w-0">
           <a
             href="https://github.com/sks01dev/lumiere"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#EAB308] px-5 py-2.5 text-xs font-semibold text-black transition hover:bg-[#FACC15]"
+            className="inline-flex items-center gap-2 rounded-full bg-[#EAB308] px-5 py-2.5 text-xs font-semibold text-black transition hover:bg-[#FACC15] w-full min-w-0"
           >
             <GitBranch className="h-4 w-4" />
             View Source Code on GitHub
@@ -37,7 +37,7 @@ export default function AboutPage() {
             href={API_DOCS_URL}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-[#1E2230] bg-[#07080B] px-5 py-2.5 text-xs font-semibold text-zinc-200 transition hover:border-zinc-600"
+            className="inline-flex items-center gap-2 rounded-full border border-[#1E2230] bg-[#07080B] px-5 py-2.5 text-xs font-semibold text-zinc-200 transition hover:border-zinc-600 w-full min-w-0"
           >
             Interactive API Docs
             <ExternalLink className="h-3.5 w-3.5" />
@@ -45,7 +45,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <section className="grid grid-cols-1 gap-6 md:grid-cols-2 w-full min-w-0">
         <div className="rounded-2xl border border-[#1E2230] bg-[#0F1117] p-6">
           <h2 className="text-lg font-semibold text-white">
             The Dataset &amp; Enrichment

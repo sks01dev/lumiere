@@ -31,7 +31,7 @@ export default async function BenchmarksPage() {
           involving plot descriptions, runtime limits, and exclusions.
         </p>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3 w-full min-w-0">
           <div className="rounded-2xl border border-[#1E2230] bg-[#07080B] p-4">
             <p className="text-xs font-semibold uppercase tracking-wider text-[#EAB308]">
               Top-3 Accuracy (Hit@3)
@@ -65,11 +65,11 @@ export default async function BenchmarksPage() {
               key={row.stage}
               className="rounded-2xl border border-[#1E2230] bg-[#07080B] p-5"
             >
-              <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-2 w-full min-w-0">
                 <span className="text-sm font-semibold text-white">
                   {FRIENDLY_NAMES[row.stage] || row.stage}
                 </span>
-                <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-400">
+                <div className="flex flex-wrap items-center gap-4 text-xs text-zinc-400 w-full min-w-0">
                   <span>
                     Top-3 Accuracy:{" "}
                     <strong className="text-[#EAB308]">
@@ -108,7 +108,7 @@ export default async function BenchmarksPage() {
         >
           Why Traditional Search Fails (Real Examples)
         </h2>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 w-full min-w-0">
           {data.case_studies.map((cs) => (
             <div
               key={cs.query}
@@ -118,7 +118,7 @@ export default async function BenchmarksPage() {
                 Search: &ldquo;{cs.query}&rdquo;
               </p>
 
-              <div className="mt-4 flex items-start gap-2.5 text-sm text-zinc-400">
+              <div className="mt-4 flex items-start gap-2.5 text-sm text-zinc-400 w-full min-w-0">
                 <XCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />
                 <div>
                   <span className="font-semibold text-zinc-200">
@@ -128,7 +128,7 @@ export default async function BenchmarksPage() {
                 </div>
               </div>
 
-              <div className="mt-3 flex items-start gap-2.5 text-sm text-zinc-300">
+              <div className="mt-3 flex items-start gap-2.5 text-sm text-zinc-300 w-full min-w-0">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
                 <div>
                   <span className="font-semibold text-white">Lumière: </span>

@@ -111,7 +111,7 @@ export default function DiscoverPage() {
     return (
       <div className="mx-auto w-full max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
         <div className="rounded-3xl border border-[#1E2230] bg-[#0F1117] p-8 text-center sm:p-14">
-          <span className="inline-flex items-center gap-2 rounded-full border border-[#EAB308]/30 bg-[#EAB308]/10 px-4 py-1 text-xs font-semibold tracking-wide text-[#EAB308]">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#EAB308]/30 bg-[#EAB308]/10 px-4 py-1 text-xs font-semibold tracking-wide text-[#EAB308] w-full min-w-0">
             <Film className="h-3.5 w-3.5" />
             Curated Cinema Discovery
           </span>
@@ -132,11 +132,11 @@ export default function DiscoverPage() {
             .
           </p>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row w-full min-w-0">
             <button
               type="button"
               onClick={signInWithGoogle}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#EAB308] px-7 py-3.5 text-sm font-semibold text-black transition-colors hover:bg-[#FACC15] active:scale-95 sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#EAB308] px-7 py-3.5 text-sm font-semibold text-black transition-colors hover:bg-[#FACC15] active:scale-95 sm:w-auto min-w-0"
             >
               <LogIn className="h-4 w-4" />
               Sign in with Google
@@ -145,14 +145,14 @@ export default function DiscoverPage() {
             <button
               type="button"
               onClick={enterAsGuest}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#1E2230] bg-[#07080B] px-7 py-3.5 text-sm font-semibold text-zinc-200 transition-colors hover:border-zinc-600 hover:text-white active:scale-95 sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#1E2230] bg-[#07080B] px-7 py-3.5 text-sm font-semibold text-zinc-200 transition-colors hover:border-zinc-600 hover:text-white active:scale-95 sm:w-auto min-w-0"
             >
               Browse as Guest
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-4 border-t border-[#1E2230] pt-8 text-left sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-4 border-t border-[#1E2230] pt-8 text-left sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full min-w-0">
             <div className="rounded-2xl border border-[#1E2230] bg-[#07080B] p-5">
               <Compass className="h-5 w-5 text-[#EAB308]" />
               <h2 className="mt-3 text-sm font-semibold text-white">
@@ -194,7 +194,7 @@ export default function DiscoverPage() {
   return (
     <div className="space-y-10">
       <section className="rounded-3xl border border-[#1E2230] bg-[#0F1117] p-6 sm:p-10">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end w-full min-w-0">
           <div>
             <h1
               style={{ fontFamily: "var(--font-serif), Georgia, serif" }}
@@ -208,7 +208,7 @@ export default function DiscoverPage() {
             </p>
           </div>
 
-          <div className="inline-flex self-start rounded-full border border-[#1E2230] bg-[#07080B] p-1">
+          <div className="inline-flex self-start rounded-full border border-[#1E2230] bg-[#07080B] p-1 w-full min-w-0">
             <button
               type="button"
               onClick={() => handleModeSwitch("hybrid_rerank")}
@@ -240,9 +240,9 @@ export default function DiscoverPage() {
             e.preventDefault();
             void runSearch(query, mode);
           }}
-          className="mt-6 flex flex-col gap-3 sm:flex-row"
+          className="mt-6 flex flex-col gap-3 sm:flex-row w-full min-w-0"
         >
-          <div className="relative flex-1">
+          <div className="relative flex-1 w-full min-w-0">
             <Search className="pointer-events-none absolute top-3.5 left-4 h-5 w-5 text-zinc-500" />
             <input
               type="text"
@@ -261,7 +261,7 @@ export default function DiscoverPage() {
           </button>
         </form>
 
-        <div className="mt-4 flex flex-wrap items-center gap-2">
+        <div className="mt-4 flex flex-wrap items-center gap-2 w-full min-w-0">
           <span className="text-xs font-medium text-zinc-500">Try:</span>
           {PRESET_QUERIES.map((preset) => (
             <button
@@ -280,9 +280,9 @@ export default function DiscoverPage() {
       </section>
 
       {data && (
-        <section className="flex flex-wrap items-center justify-between gap-3 px-1 text-xs">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="flex items-center gap-1.5 font-medium text-zinc-400">
+        <section className="flex flex-wrap items-center justify-between gap-3 px-1 text-xs w-full min-w-0">
+          <div className="flex flex-wrap items-center gap-2 w-full min-w-0">
+            <span className="flex items-center gap-1.5 font-medium text-zinc-400 w-full min-w-0">
               <SlidersHorizontal className="h-3.5 w-3.5 text-[#EAB308]" />
               Active Filters:
             </span>
@@ -330,7 +330,7 @@ export default function DiscoverPage() {
 
       {/* Instant Shimmer Skeleton Loader during search */}
       {loading && !data && (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 w-full min-w-0">
           {Array.from({ length: 6 }).map((_, i) => (
             <div
               key={i}
@@ -377,7 +377,7 @@ export default function DiscoverPage() {
             return (
               <div
                 key={movie.id}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#1E2230] bg-[#0F1117] transition-transform duration-200 hover:-translate-y-1 hover:border-zinc-700"
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-[#1E2230] bg-[#0F1117] transition-transform duration-200 hover:-translate-y-1 hover:border-zinc-700 w-full min-w-0"
               >
                 <button
                   type="button"
@@ -403,7 +403,7 @@ export default function DiscoverPage() {
                   )}
                 </button>
 
-                <Link href={`/movie/${movie.id}`} className="flex flex-1 flex-col">
+                <Link href={`/movie/${movie.id}`} className="flex flex-1 flex-col w-full min-w-0">
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-900">
                     {movie.backdrop_url || movie.poster_url ? (
                       <img
@@ -420,24 +420,24 @@ export default function DiscoverPage() {
                       {movie.match_percent}% Match
                     </span>
 
-                    <span className="absolute top-3 right-3 flex items-center gap-1 rounded-full border border-white/10 bg-[#07080B]/90 px-2.5 py-1 text-xs font-medium text-zinc-200">
+                    <span className="absolute top-3 right-3 flex items-center gap-1 rounded-full border border-white/10 bg-[#07080B]/90 px-2.5 py-1 text-xs font-medium text-zinc-200 w-full min-w-0">
                       <Star className="h-3.5 w-3.5 fill-[#EAB308] text-[#EAB308]" />
                       {movie.rating ?? "N/A"}
                     </span>
                   </div>
 
-                  <div className="flex flex-1 flex-col justify-between p-5">
+                  <div className="flex flex-1 flex-col justify-between p-5 w-full min-w-0">
                     <div>
                       <h2 className="text-lg font-semibold text-white transition-colors group-hover:text-[#EAB308]">
                         {movie.title}
                       </h2>
 
-                      <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-zinc-400">
+                      <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-zinc-400 w-full min-w-0">
                         <span>{movie.release_year}</span>
                         {movie.runtime && (
                           <>
                             <span>•</span>
-                            <span className="flex items-center gap-1">
+                            <span className="flex items-center gap-1 w-full min-w-0">
                               <Clock className="h-3 w-3" />
                               {movie.runtime}m
                             </span>
@@ -451,7 +451,7 @@ export default function DiscoverPage() {
                         )}
                       </div>
 
-                      <div className="mt-3 flex flex-wrap gap-1.5">
+                      <div className="mt-3 flex flex-wrap gap-1.5 w-full min-w-0">
                         {movie.genres.slice(0, 3).map((g) => (
                           <span
                             key={g}
@@ -489,7 +489,7 @@ export default function DiscoverPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-6 w-full min-w-0">
             {forYou.map((rec) => (
               <Link
                 key={rec.id}

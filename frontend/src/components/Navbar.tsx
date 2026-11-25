@@ -19,13 +19,13 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-[#1E2230] bg-[#07080B]/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 w-full min-w-0">
         <Link
           href="/"
           onClick={() => {
             if (!user) resetEntry();
           }}
-          className="flex items-center transition hover:opacity-90"
+          className="flex items-center transition hover:opacity-90 w-full min-w-0"
         >
           <span
             style={{ fontFamily: "var(--font-serif), Georgia, serif" }}
@@ -35,7 +35,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-1 sm:gap-2">
+        <nav className="flex items-center gap-1 sm:gap-2 w-full min-w-0">
           {NAV_ITEMS.map(({ href, label }) => {
             const active = pathname === href;
             return (
@@ -73,7 +73,7 @@ export default function Navbar() {
                 type="button"
                 onClick={signOut}
                 title={user.email || "Signed in"}
-                className="flex items-center gap-1.5 rounded-full border border-[#1E2230] bg-[#0F1117] px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:border-zinc-600 hover:text-white active:scale-95"
+                className="flex items-center gap-1.5 rounded-full border border-[#1E2230] bg-[#0F1117] px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:border-zinc-600 hover:text-white active:scale-95 w-full min-w-0"
               >
                 <span className="h-2 w-2 rounded-full bg-emerald-400" />
                 <span className="hidden sm:inline">
@@ -85,7 +85,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={signInWithGoogle}
-                className="flex items-center gap-1.5 rounded-full bg-[#EAB308] px-3.5 py-1.5 text-xs font-semibold text-black transition hover:bg-[#FACC15] active:scale-95"
+                className="flex items-center gap-1.5 rounded-full bg-[#EAB308] px-3.5 py-1.5 text-xs font-semibold text-black transition hover:bg-[#FACC15] active:scale-95 w-full min-w-0"
               >
                 <LogIn className="h-3.5 w-3.5" />
                 Sign in

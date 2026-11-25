@@ -46,7 +46,7 @@ export default function MovieDetailPage() {
       <div className="space-y-4 py-12">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white"
+          className="inline-flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white w-full min-w-0"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Discover
@@ -75,7 +75,7 @@ export default function MovieDetailPage() {
     <div className="space-y-10">
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-sm text-zinc-400 transition hover:text-white"
+        className="inline-flex items-center gap-1.5 text-sm text-zinc-400 transition hover:text-white w-full min-w-0"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to Discover
@@ -93,7 +93,7 @@ export default function MovieDetailPage() {
           </div>
         )}
 
-        <div className="relative -mt-20 flex flex-col gap-8 p-6 sm:flex-row sm:p-10">
+        <div className="relative -mt-20 flex flex-col gap-8 p-6 sm:flex-row sm:p-10 w-full min-w-0">
           {movie.poster_url && (
             <img
               src={movie.poster_url}
@@ -103,16 +103,16 @@ export default function MovieDetailPage() {
           )}
 
           <div className="space-y-4">
-            <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400">
+            <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400 w-full min-w-0">
               {movie.release_year && <span>{movie.release_year}</span>}
               {movie.runtime && (
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1 w-full min-w-0">
                   <Clock className="h-3.5 w-3.5" />
                   {movie.runtime} min
                 </span>
               )}
               {movie.rating && (
-                <span className="flex items-center gap-1 font-semibold text-zinc-200">
+                <span className="flex items-center gap-1 font-semibold text-zinc-200 w-full min-w-0">
                   <Star className="h-3.5 w-3.5 fill-[#EAB308] text-[#EAB308]" />
                   {movie.rating} / 10
                 </span>
@@ -126,7 +126,7 @@ export default function MovieDetailPage() {
               {movie.title}
             </h1>
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 w-full min-w-0">
               {movie.genres.map((g) => (
                 <span
                   key={g}
@@ -141,12 +141,12 @@ export default function MovieDetailPage() {
               {movie.overview}
             </p>
 
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-3 pt-2 w-full min-w-0">
               <a
                 href={ytUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[#EAB308] px-5 py-2.5 text-xs font-semibold text-black transition hover:bg-[#FACC15]"
+                className="inline-flex items-center gap-2 rounded-full bg-[#EAB308] px-5 py-2.5 text-xs font-semibold text-black transition hover:bg-[#FACC15] w-full min-w-0"
               >
                 <Play className="h-3.5 w-3.5 fill-black" />
                 Watch Trailer on YouTube
@@ -156,7 +156,7 @@ export default function MovieDetailPage() {
                 href={googleWatchUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-[#1E2230] bg-[#07080B] px-5 py-2.5 text-xs font-semibold text-zinc-200 transition hover:border-zinc-600"
+                className="inline-flex items-center gap-2 rounded-full border border-[#1E2230] bg-[#07080B] px-5 py-2.5 text-xs font-semibold text-zinc-200 transition hover:border-zinc-600 w-full min-w-0"
               >
                 Where to Stream
                 <ExternalLink className="h-3.5 w-3.5" />
@@ -185,7 +185,7 @@ export default function MovieDetailPage() {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 pt-3 text-xs text-zinc-400 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-2 pt-3 text-xs text-zinc-400 sm:grid-cols-2 w-full min-w-0">
               <div>
                 <span className="font-semibold text-zinc-200">Director: </span>
                 {movie.director || "N/A"}
@@ -200,7 +200,7 @@ export default function MovieDetailPage() {
               <button
                 type="button"
                 onClick={() => setShowTech(!showTech)}
-                className="inline-flex items-center gap-1 text-xs text-zinc-500 transition hover:text-zinc-300"
+                className="inline-flex items-center gap-1 text-xs text-zinc-500 transition hover:text-zinc-300 w-full min-w-0"
               >
                 <span>Under the hood: Catalog &amp; embedding metadata</span>
                 <ChevronDown
@@ -233,7 +233,7 @@ export default function MovieDetailPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5 w-full min-w-0">
           {neighbors.map((n) => {
             const simPct = Math.round(n.signals.dense_score * 100);
             return (
@@ -255,7 +255,7 @@ export default function MovieDetailPage() {
                 <p className="text-xs text-zinc-500">{n.release_year}</p>
 
                 <div className="mt-2.5">
-                  <div className="flex justify-between text-[11px] text-zinc-400">
+                  <div className="flex justify-between text-[11px] text-zinc-400 w-full min-w-0">
                     <span>Story Similarity</span>
                     <span className="font-semibold text-[#EAB308]">
                       {simPct}%

@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="mt-24 border-t border-[#1E2230] bg-[#07080B]">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-4 w-full min-w-0">
           <div className="sm:col-span-2">
             <span
               style={{ fontFamily: "var(--font-serif), Georgia, serif" }}
@@ -82,7 +82,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-[#1E2230] pt-6 text-xs text-zinc-500 sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-[#1E2230] pt-6 text-xs text-zinc-500 sm:flex-row w-full min-w-0">
           <p>&copy; {new Date().getFullYear()} Lumière Cinema Search.</p>
           
         </div>
