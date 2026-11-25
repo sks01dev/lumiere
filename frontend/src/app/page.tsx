@@ -111,7 +111,7 @@ export default function DiscoverPage() {
     return (
       <div className="mx-auto w-full max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-16">
         <div className="rounded-3xl border border-[#1E2230] bg-[#0F1117] p-8 text-center sm:p-14">
-          <span className="inline-flex items-center gap-2 rounded-full border border-[#EAB308]/30 bg-[#EAB308]/10 px-4 py-1 text-xs font-semibold tracking-wide text-[#EAB308] w-full min-w-0">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#EAB308]/30 bg-[#EAB308]/10 px-4 py-1 text-xs font-semibold tracking-wide text-[#EAB308] ">
             <Film className="h-3.5 w-3.5" />
             Curated Cinema Discovery
           </span>
@@ -208,7 +208,7 @@ export default function DiscoverPage() {
             </p>
           </div>
 
-          <div className="inline-flex self-start rounded-full border border-[#1E2230] bg-[#07080B] p-1 w-full min-w-0">
+          <div className="inline-flex self-start rounded-full border border-[#1E2230] bg-[#07080B] p-1 w-fit max-w-full">
             <button
               type="button"
               onClick={() => handleModeSwitch("hybrid_rerank")}
@@ -282,7 +282,7 @@ export default function DiscoverPage() {
       {data && (
         <section className="flex flex-wrap items-center justify-between gap-3 px-1 text-xs w-full min-w-0">
           <div className="flex flex-wrap items-center gap-2 w-full min-w-0">
-            <span className="flex items-center gap-1.5 font-medium text-zinc-400 w-full min-w-0">
+            <span className="flex items-center gap-1.5 font-medium text-zinc-400 ">
               <SlidersHorizontal className="h-3.5 w-3.5 text-[#EAB308]" />
               Active Filters:
             </span>
@@ -437,7 +437,7 @@ export default function DiscoverPage() {
                         {movie.runtime && (
                           <>
                             <span>•</span>
-                            <span className="flex items-center gap-1 w-full min-w-0">
+                            <span className="flex items-center gap-1 ">
                               <Clock className="h-3 w-3" />
                               {movie.runtime}m
                             </span>
