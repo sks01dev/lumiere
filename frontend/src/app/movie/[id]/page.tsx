@@ -83,17 +83,17 @@ export default function MovieDetailPage() {
 
       <section className="overflow-hidden rounded-3xl border border-[#1E2230] bg-[#0F1117]">
         {movie.backdrop_url && (
-          <div className="relative h-60 w-full sm:h-80">
+          <div className="relative h-44 w-full overflow-hidden sm:h-64">
             <img
               src={movie.backdrop_url}
               alt={movie.title}
-              className="h-full w-full object-cover opacity-55"
+              className="h-full w-full object-cover object-center opacity-45"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1117] via-[#0F1117]/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1117] via-[#0F1117]/75 to-transparent" />
           </div>
         )}
 
-        <div className="relative -mt-20 flex flex-col gap-8 p-6 sm:flex-row sm:p-10 w-full min-w-0">
+        <div className={`relative flex flex-col gap-7 p-6 sm:flex-row sm:items-start sm:p-10 ${movie.backdrop_url ? "-mt-24 sm:-mt-28" : ""}`}>
           {movie.poster_url && (
             <img
               src={movie.poster_url}
@@ -185,7 +185,7 @@ export default function MovieDetailPage() {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 gap-2 pt-3 text-xs text-zinc-400 sm:grid-cols-2 w-full min-w-0">
+            <div className="space-y-1.5 border-t border-[#1E2230]/80 pt-4 text-xs leading-relaxed text-zinc-400">
               <div>
                 <span className="font-semibold text-zinc-200">Director: </span>
                 {movie.director || "N/A"}
@@ -229,7 +229,7 @@ export default function MovieDetailPage() {
             Similar Movies You Might Love
           </h2>
           <p className="mt-1 text-sm text-zinc-400">
-            Films that share the closest storytelling, tone, and thematic DNA.
+            Matched by story, tone, and themes.
           </p>
         </div>
 
