@@ -95,19 +95,19 @@ export default function MovieDetailPage() {
             <img
               src={movie.backdrop_url}
               alt={movie.title}
-              className="h-full w-full object-cover object-center opacity-70"
+              className="h-full w-full object-cover object-center opacity-75"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1117] via-[#0F1117]/80 to-[#0F1117]/25" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1117] via-transparent to-[#0F1117]/35" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1117]/95 via-[#0F1117]/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1117]/75 via-transparent to-transparent" />
           </div>
         )}
 
-        <div className="relative z-10 flex flex-col gap-7 p-6 sm:flex-row sm:items-center sm:p-10">
+        <div className="relative z-10 flex flex-col gap-8 p-6 sm:flex-row sm:items-end sm:p-10">
           {movie.poster_url && (
             <img
               src={movie.poster_url}
               alt={movie.title}
-              className="mx-auto aspect-[2/3] w-44 shrink-0 rounded-2xl border border-[#1E2230] object-cover shadow-2xl sm:mx-0 sm:w-52"
+              className="mx-auto aspect-[2/3] w-48 shrink-0 rounded-2xl border border-white/10 object-cover shadow-2xl sm:mx-0 sm:w-60"
             />
           )}
 
@@ -238,7 +238,7 @@ export default function MovieDetailPage() {
             Similar Movies You Might Love
           </h2>
           <p className="mt-1 text-sm text-zinc-400">
-            Matched by story, tone, and themes.
+            Based on story, themes, and tone.
           </p>
         </div>
 
