@@ -98,7 +98,7 @@ export default function MovieDetailPage() {
             <img
               src={movie.poster_url}
               alt={movie.title}
-              className="h-64 w-44 shrink-0 rounded-2xl border border-[#1E2230] object-cover shadow-2xl"
+              className="mx-auto aspect-[2/3] w-44 shrink-0 rounded-2xl border border-[#1E2230] object-cover shadow-2xl sm:mx-0 sm:w-52"
             />
           )}
 
@@ -106,13 +106,13 @@ export default function MovieDetailPage() {
             <div className="flex flex-wrap items-center gap-3 text-xs text-zinc-400 w-full min-w-0">
               {movie.release_year && <span>{movie.release_year}</span>}
               {movie.runtime && (
-                <span className="flex items-center gap-1 w-full min-w-0">
+                <span className="inline-flex shrink-0 items-center gap-1">
                   <Clock className="h-3.5 w-3.5" />
                   {movie.runtime} min
                 </span>
               )}
               {movie.rating && (
-                <span className="flex items-center gap-1 font-semibold text-zinc-200 w-full min-w-0">
+                <span className="inline-flex shrink-0 items-center gap-1 font-semibold text-zinc-200">
                   <Star className="h-3.5 w-3.5 fill-[#EAB308] text-[#EAB308]" />
                   {movie.rating} / 10
                 </span>
@@ -146,7 +146,7 @@ export default function MovieDetailPage() {
                 href={ytUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-[#EAB308] px-5 py-2.5 text-xs font-semibold text-black transition hover:bg-[#FACC15] w-full min-w-0"
+                className="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#EAB308] px-5 py-2.5 text-xs font-semibold text-black transition hover:bg-[#FACC15]"
               >
                 <Play className="h-3.5 w-3.5 fill-black" />
                 Watch Trailer on YouTube
@@ -156,7 +156,7 @@ export default function MovieDetailPage() {
                 href={googleWatchUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-[#1E2230] bg-[#07080B] px-5 py-2.5 text-xs font-semibold text-zinc-200 transition hover:border-zinc-600 w-full min-w-0"
+                className="inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[#1E2230] bg-[#07080B]/95 px-5 py-2.5 text-xs font-semibold text-zinc-200 transition hover:border-zinc-600"
               >
                 Where to Stream
                 <ExternalLink className="h-3.5 w-3.5" />
