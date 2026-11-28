@@ -107,7 +107,7 @@ export default function MovieDetailPage() {
             <img
               src={movie.poster_url}
               alt={movie.title}
-              className="mx-auto aspect-[2/3] w-48 shrink-0 rounded-2xl border border-white/10 object-cover shadow-2xl sm:mx-0 sm:w-60"
+              className="mx-auto aspect-[2/3] h-80 w-56 shrink-0 rounded-2xl border border-white/15 object-cover shadow-2xl sm:mx-0 sm:h-96 sm:w-64"
             />
           )}
 
@@ -130,7 +130,7 @@ export default function MovieDetailPage() {
 
             <h1
               style={{ fontFamily: "var(--font-serif), Georgia, serif" }}
-              className="text-3xl font-bold text-white sm:text-4xl"
+              className="text-4xl font-bold tracking-tight text-white sm:text-5xl"
             >
               {movie.title}
             </h1>

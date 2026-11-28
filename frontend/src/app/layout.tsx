@@ -20,7 +20,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Lumière — Discover Cinema by Mood, Story & Nuance",
+  title: "Lumière | Cinema Discovery",
   description:
     "Intelligent movie discovery powered by hybrid semantic search, natural-language filters, and personalized watchlist recommendations.",
 };
