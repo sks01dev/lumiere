@@ -12,6 +12,7 @@ import {
   Bookmark,
   Check,
   ChevronDown,
+  Loader2,
 } from "lucide-react";
 import { fetchMovieDetail } from "@/lib/api";
 import { MovieDetailResponse } from "@/lib/types";
@@ -46,7 +47,7 @@ export default function MovieDetailPage() {
       <div className="space-y-4 py-12">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white w-full min-w-0"
+          className="inline-flex items-center gap-1.5 text-sm text-zinc-400 transition hover:text-white"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Discover
@@ -59,7 +60,14 @@ export default function MovieDetailPage() {
   }
 
   if (!detail) {
-    return <p className="py-12 text-sm text-zinc-400">Loading film...</p>;
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center py-16">
+        <div className="flex flex-col items-center gap-3 text-zinc-400">
+          <Loader2 className="h-7 w-7 animate-spin text-[#EAB308]" />
+          <span className="text-xs font-medium tracking-wide">Loading film details...</span>
+        </div>
+      </div>
+    );
   }
 
   const { movie, neighbors } = detail;
@@ -200,7 +208,7 @@ export default function MovieDetailPage() {
               <button
                 type="button"
                 onClick={() => setShowTech(!showTech)}
-                className="inline-flex items-center gap-1 text-xs text-zinc-500 transition hover:text-zinc-300 w-full min-w-0"
+                className="inline-flex items-center gap-1 text-xs text-zinc-500 transition hover:text-zinc-300"
               >
                 <span>Under the hood: Catalog &amp; embedding metadata</span>
                 <ChevronDown
