@@ -89,20 +89,20 @@ export default function MovieDetailPage() {
         Back to Discover
       </Link>
 
-      <section className="relative overflow-hidden rounded-3xl border border-[#1E2230] bg-[#0F1117]">
+      <section className="relative flex min-h-[36rem] flex-col justify-end overflow-hidden rounded-3xl border border-[#1E2230] bg-[#0F1117] sm:min-h-[42rem]">
         {movie.backdrop_url && (
           <div className="pointer-events-none absolute inset-0">
             <img
               src={movie.backdrop_url}
               alt={movie.title}
-              className="h-full w-full object-cover object-center opacity-75"
+              className="h-full w-full object-cover object-center opacity-80"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1117]/95 via-[#0F1117]/30 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1117]/75 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1117] via-[#0F1117]/35 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1117]/80 via-[#0F1117]/20 to-transparent" />
           </div>
         )}
 
-        <div className="relative z-10 flex flex-col gap-8 p-6 sm:flex-row sm:items-end sm:p-10">
+        <div className="relative z-10 flex flex-col gap-8 px-6 pt-28 pb-10 sm:flex-row sm:items-end sm:px-10 sm:pt-36 sm:pb-12">
           {movie.poster_url && (
             <img
               src={movie.poster_url}
